@@ -12,17 +12,23 @@ encoding = 'big5'
 data = gpd.read_file(file_path,  encoding=encoding)
 #僅界定出台南市市中心九區的部份
 townlist=['東區', '南區', '北區', '安平區', '安南區', '中西區', '永康區', '歸仁區', '仁德區']
+data
 #%%
-
-data.head()
+data= data[data['TOWN'].isin(townlist)]
+# %%
+data=data[['CODEBASE', 'geometry','TOWN']]
 # %%
 #merge the dataframes on 'CODEBASE'
 merged = df.merge(data, left_on='townvill', right_on='CODEBASE')
 merged
 # %%
 #轉換成geojson地理數據格式
-
 merged = gpd.GeoDataFrame(merged, geometry='geometry')
-merged.to_file('/home/joe/Documents/2023_semi_supervised_learning/台南未來病例預測模型/病例結果呈現/20250804xgboost_future14_case_results.geojson', driver='GeoJSON')
+#merged.to_file('/home/joe/Documents/2023_semi_supervised_learning/台南未來病例預測模型/病例結果呈現/20250804xgboost_future14_case_results.geojson', driver='GeoJSON')
+# %%])
+#將每日的結果各自儲存成一個geojson檔案
+for date in merged['date'].unique():
+    daily_data = merged[merged['date'] == date]
+    daily_data.to_file(f'/home/joe/Documents/2023_semi_supervised_learning/台南未來病例預測模型/病例結果呈現/data/{date}_case_results.geojson', driver='GeoJSON')
 
 # %%
