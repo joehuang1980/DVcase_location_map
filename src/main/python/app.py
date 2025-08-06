@@ -51,7 +51,7 @@ def get_data_by_date():
         # Convert to GeoJSON format
         features = []
         for row in predictions:
-            date, townvill, town, predicted_value, predicted_percentage, geometry_json = row
+            date, townvill, town, predicted_value, predicted_percentage, predicted_binary, actual_case, geometry_json = row
             
             feature = {
                 "type": "Feature",
@@ -60,7 +60,9 @@ def get_data_by_date():
                     "townvill": townvill,
                     "town": town,
                     "predicted_case_lag_future_14": predicted_value,
-                    "predicted_case_lag_future_14_percentage": predicted_percentage
+                    "predicted_case_lag_future_14_percentage": predicted_percentage,
+                    "predicted_case_lag_future_14_binary": predicted_binary,
+                    "case_lag_future_14": actual_case
                 },
                 "geometry": json.loads(geometry_json)
             }

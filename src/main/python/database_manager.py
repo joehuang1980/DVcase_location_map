@@ -239,7 +239,8 @@ class DiseaseDataDatabase:
         
         cursor.execute('''
             SELECT date, townvill, town, predicted_case_lag_future_14,
-                   predicted_case_lag_future_14_percentage, geometry_json
+                   predicted_case_lag_future_14_percentage, predicted_case_lag_future_14_binary,
+                   case_lag_future_14, geometry_json
             FROM predictions 
             WHERE date = ?
             ORDER BY predicted_case_lag_future_14_percentage DESC
