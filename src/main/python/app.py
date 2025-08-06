@@ -1,10 +1,13 @@
 from flask import Flask, render_template, jsonify
 import pandas as pd
+import os
 
-app = Flask(__name__)
+app = Flask(__name__,
+            static_folder=os.path.abspath('src/main/resources/assets'),
+            template_folder=os.path.abspath('src/main/resources'))
 
 # Load your data
-df = pd.read_csv('/home/joe/Documents/2023_semi_supervised_learning/台南未來病例預測模型/xgboost/20250804xgboost_future14_case_results.csv')
+df = pd.read_csv(os.path.join(os.path.dirname(__file__), '../../../../../20250804xgboost_future14_case_results.geojson'))
 df['date'] = pd.to_datetime(df['date'])
 
 @app.route('/')
